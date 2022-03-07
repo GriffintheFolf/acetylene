@@ -1,6 +1,6 @@
 // config.h
-// You can edit these symbols to change the behavior & appearance of flwm.
-// Turning off features will make flwm smaller too!
+// You can edit these symbols to change the behavior & appearance of acetylene.
+// Turning off features will make acetylene smaller too!
 
 ////////////////////////////////////////////////////////////////
 // BEHAVIOR:
@@ -32,7 +32,7 @@
 #define SMART_PLACEMENT 1
 
 // set this to zero to remove the multiple-desktop code.  This will
-// make flwm about 20K smaller
+// make acetylene about 20K smaller
 #define DESKTOPS 1
 
 // set this to zero for "new desktop" to just create one without asking
@@ -127,13 +127,13 @@
 
 // Add a clock to the active window's title bar using specified
 // strftime fmt Note: in keeping with the minimalistic, fast, and
-// small philosophy of the flwm, the clock will only be updated
+// small philosophy of acetylene, the clock will only be updated
 // once/minute so any display of seconds is frivolous.
 //#define SHOW_CLOCK "%I:%M %p %Z"
 
 // We also support the concept of a clock alarm.  The alarm is
-// triggered by delivering SIGALRM to flwm and cleared by delivering
-// SIGCONT to flwm.  When the alarm is active, the foreground and
+// triggered by delivering SIGALRM to acetylene and cleared by delivering
+// SIGCONT to acetylene.  When the alarm is active, the foreground and
 // background colors of the clock display are determined by the
 // following settings.  (The following are unused if SHOW_CLOCK is not
 // defined).

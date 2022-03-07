@@ -15,7 +15,7 @@ much-needed quality of life improvements.
 New commits to acetylene are:
 
 ```
-Copyright (c) 2022 Thomas Sirack.
+Copyright (c) 2022 Thomas Sirack
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ USA.
 The original FLWM code is:
 
 ```
-Copyright (c) 1998-2015 Bill Spitzak.
+Copyright (c) 1998-2015 Bill Spitzak
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

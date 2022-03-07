@@ -46,22 +46,20 @@ include makedepend
 
 install: $(PROGRAM)
 	$(INSTALL) -s $(PROGRAM) $(bindir)/$(PROGRAM)
-	$(INSTALL) $(PROGRAM).$(MANPAGE) $(mandir)/man$(MANPAGE)/$(PROGRAM).$(MANPAGE)
 
 uninstall:
 	-@ rm -f $(bindir)/$(PROGRAM)
-	-@ rm -f $(mandir)/man$(MANPAGE)/$(PROGRAM).$(MANPAGE)
 
 dist:
 	cat /dev/null > makedepend
 	-@mkdir $(PROGRAM)-$(VERSION)
-	-@ln README Makefile configure install-sh makedepend *.cpp *.h *.in *.fl $(PROGRAM).$(MANPAGE) flwm_wmconfig $(PROGRAM)-$(VERSION)
+	-@ln README Makefile configure install-sh makedepend *.cpp *.h *.in *.fl flwm_wmconfig $(PROGRAM)-$(VERSION)
 	tar -cvzf $(PROGRAM)-$(VERSION).tgz $(PROGRAM)-$(VERSION)
 	-@rm -r $(PROGRAM)-$(VERSION)
 
 exedist:
 	-@mkdir $(PROGRAM)-$(VERSION)-x86
-	-@ln README $(PROGRAM) $(PROGRAM).$(MANPAGE) flwm_wmconfig $(PROGRAM)-$(VERSION)-x86
+	-@ln README $(PROGRAM) flwm_wmconfig $(PROGRAM)-$(VERSION)-x86
 	tar -cvzf $(PROGRAM)-$(VERSION)-x86.tgz $(PROGRAM)-$(VERSION)-x86
 	-@rm -r $(PROGRAM)-$(VERSION)-x86
 
