@@ -11,8 +11,8 @@
 // not be modal.
 
 #include <FL/Fl.H>
-#include "FrameWindow.H"
-#include "Frame.H"
+#include "FrameWindow.h"
+#include "Frame.h"
 
 extern int dont_set_event_mask;
 

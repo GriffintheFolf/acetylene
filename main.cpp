@@ -1,5 +1,5 @@
 #define FL_INTERNALS 1
-#include "Frame.H"
+#include "Frame.h"
 #include <X11/Xproto.h>
 #include <stdio.h>
 #include <stdlib.h>

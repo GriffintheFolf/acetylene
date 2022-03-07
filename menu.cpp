@@ -1,9 +1,9 @@
 // Menu.cxx
 
 #include "config.h"
-#include "Frame.H"
+#include "Frame.h"
 #if DESKTOPS
-#include "Desktop.H"
+#include "Desktop.h"
 #endif
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Return_Button.H>
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "FrameWindow.H"
+#include "FrameWindow.h"
 
 #include <sys/types.h>
 #include <dirent.h>

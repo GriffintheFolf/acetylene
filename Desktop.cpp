@@ -4,8 +4,8 @@
 
 #if DESKTOPS
 
-#include "Frame.H"
-#include "Desktop.H"
+#include "Frame.h"
+#include "Desktop.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

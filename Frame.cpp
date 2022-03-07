@@ -2,8 +2,8 @@
 
 #define FL_INTERNALS 1
 #include "config.h"
-#include "Frame.H"
-#include "Desktop.H"
+#include "Frame.h"
+#include "Desktop.h"
 #include <string.h>
 #include <stdio.h>
 #include <FL/fl_draw.H>

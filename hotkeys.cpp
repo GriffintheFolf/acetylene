@@ -3,8 +3,8 @@
 // If you want to change what the hotkeys are, see the table at the bottom!
 
 #include "config.h"
-#include "Frame.H"
-#include "Desktop.H"
+#include "Frame.h"
+#include "Desktop.h"
 #include <stdio.h>
 
 extern void ShowMenu();
