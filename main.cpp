@@ -368,6 +368,8 @@ int main(int argc, char** argv) {
 #ifndef FL_NORMAL_SIZE // detect new versions of fltk where this is a variable
   FL_NORMAL_SIZE = 12;
 #endif
+
+  Fl::scheme("gleam");
   fl_open_display();
   color_setup(CURSOR_FG_SLOT, cfg, CURSOR_FG_COLOR<<8);
   color_setup(CURSOR_BG_SLOT, cbg, CURSOR_BG_COLOR<<8);
