@@ -1,7 +1,7 @@
 dnl# -*- sh -*-
 dnl# the "configure" script is made from this by running GNU "autoconf"
 
-AC_INIT(Frame.C)
+AC_INIT(frame.cpp)
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL

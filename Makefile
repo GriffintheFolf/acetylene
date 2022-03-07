@@ -3,13 +3,13 @@ SHELL=/bin/sh
 PROGRAM = acetylene
 VERSION = 1.0
 
-CXXFILES = main.C Frame.C Menu.C FrameWindow.C Desktop.C Hotkeys.C
+CXXFILES = main.cpp Frame.cpp menu.cpp FrameWindow.cpp Desktop.cpp hotkeys.cpp
 
 MANPAGE = 1
 
 ################################################################
 
-OBJECTS = $(CXXFILES:.C=.o)
+OBJECTS = $(CXXFILES:.cpp=.o)
 
 all:	makeinclude $(PROGRAM)
 
@@ -23,15 +23,15 @@ makeinclude: configure makeinclude.in
 	./configure
 include makeinclude
 
-.SUFFIXES : .fl .do .C .c .H
+.SUFFIXES : .fl .do .cpp .c .h
 
-.C.o :
+.cpp.o :
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
-.C :
+.cpp :
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
-.fl.C :
+.fl.cpp :
 	-fluid -c $<
-.fl.H :
+.fl.h :
 	-fluid -c $<
 
 clean :
@@ -55,7 +55,7 @@ uninstall:
 dist:
 	cat /dev/null > makedepend
 	-@mkdir $(PROGRAM)-$(VERSION)
-	-@ln README Makefile configure install-sh makedepend *.C *.H *.h *.in *.fl $(PROGRAM).$(MANPAGE) flwm_wmconfig $(PROGRAM)-$(VERSION)
+	-@ln README Makefile configure install-sh makedepend *.cpp *.h *.in *.fl $(PROGRAM).$(MANPAGE) flwm_wmconfig $(PROGRAM)-$(VERSION)
 	tar -cvzf $(PROGRAM)-$(VERSION).tgz $(PROGRAM)-$(VERSION)
 	-@rm -r $(PROGRAM)-$(VERSION)
 
@@ -71,9 +71,9 @@ PROGRAM_D = $(PROGRAM)_d
 
 debug: $(PROGRAM_D)
 
-OBJECTS_D = $(CXXFILES:.C=.do) $(CFILES:.c=.do)
+OBJECTS_D = $(CXXFILES:.cpp=.do) $(CFILES:.c=.do)
 
-.C.do :
+.cpp.do :
 	$(CXX) -I.. $(CXXFLAGS) -DDEBUG -c -o $@ $<
 .c.do :
 	$(CC) -I.. $(CFLAGS) -DDEBUG -o $@ $<
