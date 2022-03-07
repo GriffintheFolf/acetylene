@@ -1,7 +1,7 @@
 SHELL=/bin/sh
 
-PROGRAM = flwm
-VERSION = 1.02
+PROGRAM = acetylene
+VERSION = 1.0
 
 CXXFILES = main.C Frame.C Menu.C FrameWindow.C Desktop.C Hotkeys.C
 

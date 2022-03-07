@@ -9,9 +9,8 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>
 #include <FL/x.H>
-#if FL_MAJOR_VERSION<2
-# define XWindow Window
-#endif
+
+#define XWindow Window
 
 // The state is an enumeration of reasons why the window may be invisible.
 // Only if it is NORMAL is the window visible.

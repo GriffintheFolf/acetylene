@@ -78,9 +78,6 @@ Frame::Frame(XWindow window, XWindowAttributes* existing) :
   max_w_button(BUTTON_LEFT,BUTTON_TOP+BUTTON_H,BUTTON_W,BUTTON_H,"w"),
   min_w_button(BUTTON_LEFT,BUTTON_TOP+2*BUTTON_H,BUTTON_W,BUTTON_H,"W")
 {
-#if FL_MAJOR_VERSION > 1
-  clear_double_buffer();
-#endif
   close_button.callback(button_cb_static);
   iconize_button.callback(button_cb_static);
   max_h_button.type(FL_TOGGLE_BUTTON);
@@ -404,7 +401,7 @@ void Frame::place_window() {
       }
     }
 }
-#endif
+#endif // !SMART_PLACEMENT
 
 // modify the passed X & W to a legal horizontal window position
 int Frame::force_x_onscreen(int X, int W) {
@@ -1200,9 +1197,6 @@ void Frame::show_hide_buttons() {
 void Frame::resize(int, int, int, int) {}
 // For fltk2.0:
 void Frame::layout() {
-#if FL_MAJOR_VERSION>1 
-  layout_damage(0); // actually this line is not needed in newest cvs fltk2.0
-#endif
 }
 
 ////////////////////////////////////////////////////////////////
@@ -1239,9 +1233,6 @@ void Frame::save_protocol() {
 
 ////////////////////////////////////////////////////////////////
 // Drawing code:
-#if FL_MAJOR_VERSION>1
-# include <fltk/Box.h>
-#endif
 
 void Frame::draw() {
   if (flag(NO_BORDER)) return;
@@ -1283,7 +1274,7 @@ void Frame::draw() {
 	  // Only show the clock on the active frame.
 	  XClearArea(fl_display, fl_xid(this), 1, label_y+3,
 		     left-1, label_h-3, 0);
-#endif      
+#endif
       fl_color(labelcolor());
       fl_font(TITLE_FONT_SLOT, TITLE_FONT_SIZE);
       if (label() && *label())
@@ -1305,16 +1296,10 @@ void Frame::redraw_clock() {
 #endif
 
 void FrameButton::draw() {
-#if FL_MAJOR_VERSION>1
-  const int x = value()?1:0;
-  const int y = x;
-  drawstyle(style(),flags()|fltk::OUTPUT);
-  FL_UP_BOX->draw(Rectangle(w(),h()));
-#else
   const int x = this->x();
   const int y = this->y();
   Fl_Widget::draw_box(value() ? FL_DOWN_FRAME : FL_UP_FRAME, FL_GRAY);
-#endif
+
   fl_color(parent()->labelcolor());
   switch (label()[0]) {
   case 'W':
@@ -1465,9 +1450,6 @@ void Frame::set_cursor(int r) {
     c = FL_CURSOR_NESW;
     break;
   }
-#if FL_MAJOR_VERSION>1
-  cursor(c);
-#else
   static Frame* previous_frame;
   static Fl_Cursor previous_cursor;
   if (this != previous_frame || c != previous_cursor) {
@@ -1475,7 +1457,6 @@ void Frame::set_cursor(int r) {
     previous_cursor = c;
     cursor(c, CURSOR_FG_SLOT, CURSOR_BG_SLOT);
   }
-#endif
 }
 
 #ifdef AUTO_RAISE
@@ -1497,17 +1478,11 @@ static Frame* cursor_inside = 0;
 int Frame::handle(int e) {
   static int what, dx, dy, ix, iy, iw, ih;
   // see if child widget handles event:
-#if FL_MAJOR_VERSION > 1
-  if (fltk::Group::handle(e) && e != FL_ENTER && e != FL_MOVE) {
-    if (e == FL_PUSH) set_cursor(-1);
-    return 1;
-  }
-#else
   if (Fl_Group::handle(e) && e != FL_ENTER && e != FL_MOVE) {
     if (e == FL_PUSH) set_cursor(-1);
     return 1;
   }
-#endif
+
   switch (e) {
 
   case FL_SHOW:

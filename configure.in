@@ -10,13 +10,7 @@ AC_PATH_XTRA
 dnl# LIBS="$LIBS$X_LIBS$X_PRE_LIBS"
 LIBS="$LIBS$X_LIBS"
 
-AC_ARG_ENABLE(fltk2,[  --enable-fltk2          use fltk2 (default=no)])
-if test x$enable_fltk2 = xyes; then
-    LIBS="-lfltk2 -lXft -lXinerama -lXi $LIBS"
-    CXXFLAGS="$CXXFLAGS -I/usr/local/include/fltk/compat"
-else
-    LIBS="-lfltk -lXft -lXinerama $LIBS"
-fi
+LIBS="-lfltk -lXft -lXinerama $LIBS"
 
 MAKEDEPEND="\$(CXX) -M"
 

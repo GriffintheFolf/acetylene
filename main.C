@@ -41,9 +41,6 @@ class Fl_Root : public Fl_Window {
   int handle(int);
 public:
   Fl_Root() : Fl_Window(0,0,Fl::w(),Fl::h()) {
-#if FL_MAJOR_VERSION > 1
-    clear_double_buffer();
-#endif
   }
   void show() {
     if (!shown()) Fl_X::set_xid(this, RootWindow(fl_display, fl_screen));
@@ -109,45 +106,26 @@ static int flwm_event_handler(int e) {
       const XMapRequestEvent* e = &(fl_xevent->xmaprequest);
       (void)new Frame(e->window);
       return 1;}
-#if FL_MAJOR_VERSION<2
+
     // this was needed for *some* earlier versions of fltk
     case KeyRelease:
       if (!Fl::grab()) return 0;
       Fl::e_keysym =
 	XKeycodeToKeysym(fl_display, fl_xevent->xkey.keycode, 0);
       goto KEYUP;
-#endif
+
     }
   } else if (e == FL_KEYUP) {
-#if FL_MAJOR_VERSION<2
+
   KEYUP:
-#endif
     if (!Fl::grab()) return 0;
     // when alt key released, pretend they hit enter & pick menu item
     if (Fl::event_key()==FL_Alt_L || Fl::event_key()==FL_Alt_R) {
       Fl::e_keysym = FL_Enter;
-#if FL_MAJOR_VERSION>1
-      return Fl::modal()->handle(FL_KEYBOARD);
-#else
       return Fl::grab()->handle(FL_KEYBOARD);
-#endif
     }
     return 0;
   } else if (e == FL_SHORTCUT || e == FL_KEYBOARD) {
-#if FL_MAJOR_VERSION == 1 && FL_MINOR_VERSION == 0 && FL_PATCH_VERSION < 3
-    // make the tab keys work in the menus in older fltk's:
-    // (they do not cycle around however, so a new fltk is a good idea)
-    if (Fl::grab()) {
-      // make fltk's menus resond to tab + shift+tab:
-      if (Fl::event_key() == FL_Tab) {
-	if (Fl::event_state() & FL_SHIFT) goto J1;
-	Fl::e_keysym = FL_Down;
-      } else if (Fl::event_key() == 0xFE20) {
-	J1: Fl::e_keysym = FL_Up;
-      } else return 0;
-      return Fl::grab()->handle(FL_KEYBOARD);
-    }
-#endif
     return Handle_Hotkey();
   }
   return 0;
@@ -204,13 +182,7 @@ void flwm_clock_alarm_off(int) {
 #endif
 
 static const char* cfg, *cbg;
-#if FL_MAJOR_VERSION>1
-static fltk::Cursor* cursor = FL_CURSOR_ARROW;
-extern FL_API fltk::Color fl_cursor_fg;
-extern FL_API fltk::Color fl_cursor_bg;
-#else
 static int cursor = FL_CURSOR_ARROW;
-#endif
 bool test_mode = false;
 
 static void initialize() {
@@ -246,11 +218,7 @@ static void initialize() {
 	       ButtonPressMask | ButtonReleaseMask | 
 	       EnterWindowMask | LeaveWindowMask |
 	       KeyPressMask | KeyReleaseMask | KeymapStateMask);
-#if FL_MAJOR_VERSION>1
-  Root->cursor(cursor);
-#else
   Root->cursor((Fl_Cursor)cursor, CURSOR_FG_SLOT, CURSOR_BG_SLOT);
-#endif
   Fl::visible_focus(0);
 
 #ifdef TITLE_FONT
@@ -349,10 +317,8 @@ int arg(int argc, char **argv, int &i) {
     cfg = v;
   } else if (!strcmp(s, "cbg")) {
     cbg = v;
-#if FL_MAJOR_VERSION < 2
   } else if (*s == 'c') {
     cursor = atoi(v);
-#endif
   } else if (*s == 'v') {
     int visid = atoi(v);
     fl_open_display();
@@ -373,7 +339,6 @@ int arg(int argc, char **argv, int &i) {
   return 2;
 }
 
-#if FL_MAJOR_VERSION<2
 static void color_setup(Fl_Color slot, const char* arg, ulong value) {
   if (arg) {
     XColor x;
@@ -382,7 +347,6 @@ static void color_setup(Fl_Color slot, const char* arg, ulong value) {
   }
   Fl::set_color(slot, value);
 }
-#endif
 
 int main(int argc, char** argv) {
   program_name = fl_filename_name(argv[0]);
@@ -404,22 +368,13 @@ int main(int argc, char** argv) {
 #ifndef FL_NORMAL_SIZE // detect new versions of fltk where this is a variable
   FL_NORMAL_SIZE = 12;
 #endif
-#if FL_MAJOR_VERSION>1
-  if (cfg) fl_cursor_fg = fltk::color(cfg);
-  if (cbg) fl_cursor_bg = fltk::color(cbg);
-#else
   fl_open_display();
   color_setup(CURSOR_FG_SLOT, cfg, CURSOR_FG_COLOR<<8);
   color_setup(CURSOR_BG_SLOT, cbg, CURSOR_BG_COLOR<<8);
   Fl::set_color(FL_SELECTION_COLOR,0,0,128);
-#endif
+
   Fl_Root root;
   Root = &root;
-#if FL_MAJOR_VERSION>1
-  // show() is not a virtual function in fltk2.0, this fools it:
-  fltk::load_theme();
-  root.show();
-#endif
   Root->show(argc,argv); // fools fltk into using -geometry to set the size
   XSetErrorHandler(xerror_handler);
   initialize();
